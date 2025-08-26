@@ -15,6 +15,14 @@ class Ship:
         # Start each new ship at bottom center
         self.rect.midbottom = self.screen_rect.midbottom
 
+        # Flag - starts with an imobile ship
+        self.moving_right = False
+
+    def update(self):
+        """Upodate ships position based on movement flags"""
+        if self.moving_right:
+            self.rect.x += 1
+
     def bliteme(self):
         """Draw ship at current location"""
         self.screen.blit(self.image, self.rect)
