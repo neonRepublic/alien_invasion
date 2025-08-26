@@ -17,11 +17,14 @@ class Ship:
 
         # Flag - starts with an imobile ship
         self.moving_right = False
+        self.moving_left = False
 
     def update(self):
         """Upodate ships position based on movement flags"""
         if self.moving_right:
             self.rect.x += 1
+        if self.moving_left:
+            self.rect.x -= 1
 
     def bliteme(self):
         """Draw ship at current location"""
