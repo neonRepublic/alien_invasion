@@ -17,6 +17,10 @@ class AlienInvasion:
     def __init__(self):
         """Starts the game and creates game resources"""
         pygame.init()
+
+        #starts game in inactive state
+        self.game_active = False
+
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.screen = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
