@@ -4,6 +4,7 @@ import pygame
 
 from settings import Settings
 from game_stats import GameStats
+from scoreboard import Scoreboard
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -29,8 +30,9 @@ class AlienInvasion:
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
 
-        #creates instance to store game stats
+        #creates instance to store stats and display scoreboard
         self.stats = GameStats(self)
+        self.sb = Scoreboard(self)
 
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
@@ -119,6 +121,11 @@ class AlienInvasion:
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True)
         
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.sb.prep_score()
+        
         if not self.aliens:
             #destroys existing bullets and creates new fleet
             self.bullets.empty()
@@ -192,6 +199,7 @@ class AlienInvasion:
             self.settings.initialize_dynamic_settings()
             # reset game stats
             self.stats.reset_stats()
+            self.sb.prep_score()
             self.game_active = True
 
             # Gets rid of remaining aliens and bullets
@@ -242,6 +250,9 @@ class AlienInvasion:
         
         self.ship.blitme()
         self.aliens.draw(self.screen)
+
+        #displays score 
+        self.sb.show_score()
 
         #draws play button if game is inactive
         if not self.game_active:
