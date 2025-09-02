@@ -133,6 +133,11 @@ class AlienInvasion:
             self._create_fleet()
             self.settings.increase_speed()
 
+            #level increase
+            self.stats.level += 1
+            self.sb.prep_level()
+
+
     
     def _update_aliens(self):
         """updates the position of all alien enemies if sleet it at edge"""
@@ -201,6 +206,7 @@ class AlienInvasion:
             # reset game stats
             self.stats.reset_stats()
             self.sb.prep_score()
+            self.sb.prep_level()
             self.game_active = True
 
             # Gets rid of remaining aliens and bullets
